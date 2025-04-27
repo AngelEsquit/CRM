@@ -1,29 +1,35 @@
-version: "3"
 services:
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: software-frontend-dev
     ports:
-      - "8080:80"
+      - "8080:8080"
     volumes:
-      - ./frontend/src:/app/src
-      - /app/node_modules
-    environment:
-      - NODE_ENV=development
+      - ./frontend:/app:Z
 
   backend:
-    build: ./software-backend
+    build:
+      context: ./software-backend
+      dockerfile: Dockerfile.dev
+    container_name: software-backend-dev
     ports:
       - "4000:4000"
-    depends_on:
-      - db
-    restart: always
+    volumes:
+      - ./software-backend:/src/app:Z
     environment:
       - NODE_ENV=development
       - DATABASE_URL=postgres://postgres:admin123@db:5432/oftalcrm
       - JWT_SECRET=OkM8ombEEyIkpqmIkMYg48DixlX8xthGFXmjmdw1bf8
+    depends_on:
+      db:
+        condition: service_healthy
 
   db:
-    build: ./database
+    image: postgres:latest
+    container_name: software-db
+    restart: always
     ports:
       - "5432:5432"
     environment:
@@ -31,7 +37,12 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=admin123
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d oftalcrm"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
-  pgdata:
+  db_data:
