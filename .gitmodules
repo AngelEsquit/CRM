@@ -1,9 +1,12 @@
 [submodule "database"]
 	path = database
 	url = git@github.com:AngelEsquit/database.git
+	branch = main
 [submodule "software-backend"]
 	path = software-backend
 	url = git@github.com:TonitoMC/software-backend.git
+	branch = dev
 [submodule "frontend"]
 	path = frontend
 	url = git@github.com:Kapiven/frontend.git
+	branch = dev
