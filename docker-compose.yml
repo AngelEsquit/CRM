@@ -19,6 +19,7 @@ services:
       - "4000:4000"
     volumes:
       - ./software-backend:/app:Z
+
     environment:
       - NODE_ENV=development
       - DATABASE_URL=postgres://postgres:admin123@db:5432/oftalcrm?sslmode=disable
@@ -32,13 +33,15 @@ services:
     container_name: software-db
     restart: always
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
       - POSTGRES_DB=oftalcrm
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=admin123
     volumes:
       - db_data:/var/lib/postgresql/data
+      - ./database/backup.sql:/docker-entrypoint-initdb.d/01_backup.sql:Z
+      - ./database/data_insertion.sql:/docker-entrypoint-initdb.d/02_data_insertion.sql:Z
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d oftalcrm"]
       interval: 10s
