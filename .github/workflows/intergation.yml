@@ -68,7 +68,7 @@ jobs:
         run: docker exec software-backend-dev go test ./internal/tests/integration -tags=integration -v
       - name: Run Cypress E2E tests
         working-directory: ./frontend
-        run: npx cypress run
+        run: npm run test:e2e
         env:
           CYPRESS_BASE_URL: http://localhost:3000
           CYPRESS_API_URL: http://localhost:4000
