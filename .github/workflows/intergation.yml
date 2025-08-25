@@ -70,11 +70,9 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           working-directory: ./frontend
-          start: npm start
-          wait-on: "http://localhost:3000"
-          wait-on-timeout: 60
+          run-tests: true
         env:
-          CYPRESS_BASE_URL: http://localhost:3000
+          CYPRESS_BASE_URL: http://localhost:8080
           CYPRESS_API_URL: http://localhost:4000
       - name: Tear down
         if: always()
