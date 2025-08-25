@@ -80,6 +80,10 @@ jobs:
           done
       - name: Run backend integration tests
         run: docker exec software-backend-dev go test ./internal/tests/integration -tags=integration -v
+      - name: Fix permissions for Cypress
+        run: |
+          sudo chown -R $USER:$USER ${{ github.workspace }}/frontend
+          chmod -R 755 ${{ github.workspace }}/frontend
       - name: Run Cypress E2E tests
         uses: cypress-io/github-action@v5
         with:
