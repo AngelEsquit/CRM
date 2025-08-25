@@ -67,8 +67,12 @@ jobs:
       - name: Run backend integration tests
         run: docker exec software-backend-dev go test ./internal/tests/integration -tags=integration -v
       - name: Run Cypress E2E tests
-        working-directory: ./frontend
-        run: npm run test:e2e
+        uses: cypress-io/github-action@v5
+        with:
+          working-directory: ./frontend
+          start: npm start
+          wait-on: "http://localhost:3000"
+          wait-on-timeout: 60
         env:
           CYPRESS_BASE_URL: http://localhost:3000
           CYPRESS_API_URL: http://localhost:4000
