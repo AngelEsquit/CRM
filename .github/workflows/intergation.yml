@@ -64,6 +64,8 @@ jobs:
           done
           echo "Backend did not become healthy in time."
           exit 1
+      - name: Run backend integration tests
+        run: docker exec software-backend-dev go test ./internal/tests/integration -tags=integration -v
       - name: Tear down
         if: always()
         run: docker compose down -v

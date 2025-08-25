@@ -1,0 +1,28 @@
+services:
+  db-test:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=oftalcrm_test
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin123
+    volumes:
+      - ./database/backup.sql:/docker-entrypoint-initdb.d/01_backup.sql:Z
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d oftalcrm_test"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend-integration:
+    build:
+      context: ./software-backend
+      dockerfile: Dockerfile.dev
+    environment:
+      - DATABASE_URL=postgres://postgres:admin123@db-test:5432/oftalcrm_test?sslmode=disable
+      - JWT_SECRET=test-secret
+    depends_on:
+      db-test:
+        condition: service_healthy
+    command: go test ./tests/integration -v
+    volumes:
+      - ./software-backend:/app:Z
