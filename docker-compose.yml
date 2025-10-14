@@ -4,6 +4,8 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.dev
     container_name: software-frontend-dev
+    environment:
+      VITE_BACKEND_URL: "http://localhost:4000" # Backend in dev
     ports:
       - "8080:8080"
     volumes:
