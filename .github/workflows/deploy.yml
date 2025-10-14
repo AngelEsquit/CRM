@@ -44,7 +44,7 @@ jobs:
         run: |
           docker build \
             --no-cache \
-            --build-arg VITE_BACKEND_URL=http://software-backend:4000 \
+          --build-arg VITE_BACKEND_URL=http://crm_backend_1:4000 \
             -t ghcr.io/tonitomc/software-frontend:latest \
             -f frontend/Dockerfile.prod \
             frontend
