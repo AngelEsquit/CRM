@@ -26,6 +26,7 @@ jobs:
 
       - name: Build and push backend image
         run: |
+          cd software-backend
           docker build --no-cache -t ghcr.io/tonitomc/software-backend:latest -f Dockerfile.prod software-backend
           docker push ghcr.io/tonitomc/software-backend:latest
 
