@@ -42,8 +42,12 @@ jobs:
 
       - name: Build and push frontend image
         run: |
-          docker build --no-cache -t ghcr.io/tonitomc/software-frontend:latest -f frontend/Dockerfile.prod frontend
-          docker push ghcr.io/tonitomc/software-frontend:latest
+          docker build \
+            --no-cache \
+            --build-arg VITE_BACKEND_URL=http://software-backend:4000 \
+            -t ghcr.io/tonitomc/software-frontend:latest \
+            -f frontend/Dockerfile.prod \
+            frontend
 
       - name: SSH to production server and deploy
         uses: appleboy/ssh-action@v0.1.9
