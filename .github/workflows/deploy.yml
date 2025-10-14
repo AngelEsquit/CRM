@@ -56,8 +56,8 @@ jobs:
           username: ${{ secrets.PROD_USER }}
           key: ${{ secrets.PROD_SSH_KEY }}
           script: |
+            docker-compose -f /home/ubuntu/crm/docker-compose.prod.yml down
             docker rmi ghcr.io/tonitomc/software-frontend:latest || true
             docker pull ghcr.io/tonitomc/software-backend:latest
             docker pull ghcr.io/tonitomc/software-frontend:latest
-            docker-compose -f /home/ubuntu/crm/docker-compose.prod.yml down
             docker-compose -f /home/ubuntu/crm/docker-compose.prod.yml up -d --force-recreate --build
