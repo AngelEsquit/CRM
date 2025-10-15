@@ -1,6 +1,9 @@
 services:
   frontend:
-    image: ghcr.io/tonitomc/software-frontend:latest
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+    image: software-frontend-prod:latest
     container_name: software-frontend-prod
     ports:
       - "80:80"
@@ -9,7 +12,10 @@ services:
       - backend
 
   backend:
-    image: ghcr.io/tonitomc/software-backend:latest
+    build:
+      context: ./software-backend
+      dockerfile: Dockerfile.prod
+    image: software-backend-prod:latest
     container_name: software-backend-prod
     ports:
       - "4000:4000"
