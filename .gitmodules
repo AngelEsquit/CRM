@@ -5,8 +5,8 @@
 [submodule "software-backend"]
 	path = software-backend
 	url = git@github.com:TonitoMC/software-backend.git
-	branch = dev
+	branch = main
 [submodule "frontend"]
 	path = frontend
 	url = git@github.com:Kapiven/frontend.git
-	branch = dev
+	branch = main
