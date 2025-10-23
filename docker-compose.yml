@@ -87,4 +87,3 @@ volumes:
   db_data:
   minio_data:
     driver: local
-# Comment for repo refresh
